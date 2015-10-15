@@ -13,6 +13,7 @@ This is a demo for simple Web RESTful service.
 /listAllPosts
 
 /* How to Launch the WebService? */
+
 ~$ mvn clean install
 ~$ mvn exec:java -Dexec.mainClass="com.myang.App"
 
