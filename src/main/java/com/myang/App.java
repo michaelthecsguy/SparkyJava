@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.myang.dao.PostDAO;
 import com.myang.dao.impl.PostDAOImpl;
 import com.myang.dto.NewPostPayloadDTO;
+import spark.Filter;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -80,10 +81,8 @@ public class App
           response.status(200);
           response.type("application/json");
 
-          return "Succesfully submitted";
-        }
-        catch (IOException ex)
-        {
+          return id;
+        } catch (IOException ex) {
           response.status(HTTP_BAD_REQUEST);
           return "Request Body Does Not Match with DTO object";
         }
@@ -97,6 +96,18 @@ public class App
         response.status(200);
         response.type("application/json");
         return dataToJson(postDao.getAllPostsInList());
+      }
+    });
+
+    // Added for Using non-existing REST Endpoint
+    after(new Filter("/*")
+    {
+      public void handle(Request requset, Response response)
+      {
+        System.out.println("Response in Raw format: " + response.raw());
+
+        if (response.raw().getStatus() == 0)
+          halt(404, "Invalid Web RESTful Endpoint");
       }
     });
 
