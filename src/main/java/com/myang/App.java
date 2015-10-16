@@ -80,7 +80,7 @@ public class App
           response.status(200);
           response.type("application/json");
 
-          return gson.toJson(newPostData);
+          return "Succesfully submitted";
         }
         catch (IOException ex)
         {
